@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📋 Devis App - Application de Gestion de Devis
 
-## Getting Started
+Une application de gestion de devis moderne développée avec [Next.js](https://nextjs.org) et [Prisma](https://prisma.io), utilisant SQLite pour le stockage local.
 
-First, run the development server:
+## 🚀 Fonctionnalités
+
+- ✅ Création et gestion de devis
+- ✅ Gestion des clients et emails
+- ✅ Lignes de devis avec quantités et prix
+- ✅ Calcul automatique HT/TVC/TTC
+- ✅ Base de données SQLite locale
+- ✅ API REST avec Next.js
+- ✅ Interface utilisateur moderne avec Tailwind CSS
+
+## 🛠️ Technologies utilisées
+
+- **Frontend** : Next.js 15, React, Tailwind CSS
+- **Backend** : Next.js API Routes
+- **Base de données** : SQLite avec Prisma ORM
+- **TypeScript** : Pour un développement robuste
+
+## 📦 Installation et démarrage
+
+### Prérequis
+
+- Node.js (version 18 ou supérieure)
+- npm, yarn, pnpm ou bun
+
+### Installation
 
 ```bash
+# Cloner le projet
+git clone [URL_DE_VOTRE_REPO]
+cd devis-app
+
+# Installer les dépendances
+npm install
+
+# Configurer la base de données
+npx prisma generate
+npx prisma db push
+```
+
+### Développement
+
+```bash
+# Démarrer le serveur de développement
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir l'application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🗄️ Base de données
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le projet utilise **SQLite** pour le développement local avec **Prisma** comme ORM.
 
-## Learn More
+### Structure des données
 
-To learn more about Next.js, take a look at the following resources:
+- **Devis** : Informations client, totaux HT/TTC/TVA
+- **Lignes** : Détails des prestations (description, quantité, prix)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Commandes Prisma utiles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Visualiser les données
+npx prisma studio
 
-## Deploy on Vercel
+# Réinitialiser la base
+npx prisma db push --force-reset
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Générer le client Prisma
+npx prisma generate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Déploiement GitHub
+
+Le projet inclut des scripts de déploiement automatisés pour GitHub :
+
+### Scripts disponibles
+
+- **`init-github.bat`** : Initialisation du dépôt GitHub (première fois seulement)
+- **`deploy.bat`** : Déploiement complet avec confirmation et messages personnalisés
+- **`deploy-quick.bat`** : Déploiement rapide automatique
+
+### Utilisation
+
+#### Première fois (nouveau projet)
+
+1. Créez un nouveau dépôt sur GitHub
+2. Double-cliquez sur `init-github.bat`
+3. Entrez l'URL de votre dépôt GitHub
+
+#### Déploiements réguliers
+
+- **Déploiement complet** : Double-cliquez sur `deploy.bat`
+- **Déploiement rapide** : Double-cliquez sur `deploy-quick.bat`
+
+## 🔧 API Routes
+
+### POST `/api/devis`
+
+Créer un nouveau devis avec ses lignes.
+
+**Body de la requête :**
+
+```json
+{
+  "client": "Nom du client",
+  "email": "email@client.com",
+  "totalHT": 1000.0,
+  "tva": 200.0,
+  "totalTTC": 1200.0,
+  "lignes": [
+    {
+      "description": "Prestation 1",
+      "quantite": 2,
+      "prixHT": 500.0
+    }
+  ]
+}
+```
+
+## 📁 Structure du projet
+
+```
+devis-app/
+├── src/
+│   ├── app/
+│   │   ├── api/devis/route.ts    # API pour les devis
+│   │   ├── devis/page.tsx        # Page de gestion des devis
+│   │   ├── layout.tsx            # Layout principal
+│   │   └── page.tsx              # Page d'accueil
+│   └── ...
+├── prisma/
+│   ├── schema.prisma             # Schéma de la base de données
+│   └── dev.db                    # Base SQLite (ignorée par Git)
+├── deploy.bat                    # Script de déploiement complet
+├── deploy-quick.bat              # Script de déploiement rapide
+├── init-github.bat               # Script d'initialisation GitHub
+└── ...
+```
+
+## 🛠️ Développement
+
+### Modifier le schéma de base de données
+
+1. Éditez `prisma/schema.prisma`
+2. Exécutez `npx prisma db push`
+3. Régénérez le client : `npx prisma generate`
+
+### Ajouter une nouvelle route API
+
+1. Créez un fichier dans `src/app/api/[nom]/route.ts`
+2. Exportez les fonctions HTTP (GET, POST, PUT, DELETE)
+
+## 📚 Ressources utiles
+
+- [Documentation Next.js](https://nextjs.org/docs) - Fonctionnalités et API Next.js
+- [Documentation Prisma](https://prisma.io/docs) - ORM et gestion de base de données
+- [Documentation Tailwind CSS](https://tailwindcss.com/docs) - Framework CSS utilitaire
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+
+1. Forker le projet
+2. Créer une branche pour votre fonctionnalité
+3. Commiter vos changements
+4. Pousser vers la branche
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
