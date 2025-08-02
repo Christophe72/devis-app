@@ -1,9 +1,23 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import Loader from "@/components/Loader";
+import Dashboard from "@/components/Dashboard";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <h1>hello world</h1>
-    </div>
+    <>
+      {isLoading ? (
+        <Loader onComplete={handleLoadingComplete} />
+      ) : (
+        <Dashboard />
+      )}
+    </>
   );
 }
